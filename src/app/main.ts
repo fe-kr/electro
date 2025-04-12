@@ -1,7 +1,11 @@
 import { app, BrowserWindow } from "electron";
-import path from "node:path";
 
 app.on("ready", () => {
   const mainWindow = new BrowserWindow();
-  mainWindow.loadFile(path.join(app.getAppPath(), "/dist/index.html"));
+
+  if (process.env.VITE_DEV_SERVER_URL) {
+    mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
+  } else {
+    mainWindow.loadFile("dist/index.html");
+  }
 });
