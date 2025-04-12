@@ -23,12 +23,12 @@
     "noUncheckedSideEffectImports": true,
 
     /* Types */
-    "types": ["vite/client"],
+    "types": ["vite/client", "./global.d.ts"],
 
     /* Paths */
     "baseUrl": ".",
     "paths": {
-      "src/*": ["src/*"],
+      "@/*": ["src/*"],
     },
   },
   "include": ["src"]

@@ -12,8 +12,7 @@
   },
   "aliases": {
     "components": "src/shared",
-    "utils": "src/shared/lib",
-    "lib": "src/shared/lib"
+    "utils": "src/shared/lib/shadcn"
   },
   "iconLibrary": "lucide"
 }

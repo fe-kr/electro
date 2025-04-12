@@ -1,3 +1,5 @@
+import { ResourcesProvider } from "@/entities/resources/model/resources-provider";
+
 export const AppMain = () => {
-  return <>Hello World</>;
+  return <ResourcesProvider>Hello World</ResourcesProvider>;
 };
