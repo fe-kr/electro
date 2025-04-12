@@ -1,13 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./main.css";
+import { AppMain } from "src/widgets/app-main";
+import { AppHeader } from "src/widgets/app-header";
 
-const App = () => {
-  return <>Hello World</>;
-};
+import "./main.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <AppHeader />
+    <AppMain />
   </StrictMode>,
 );
