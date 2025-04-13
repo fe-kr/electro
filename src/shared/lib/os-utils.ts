@@ -1,6 +1,6 @@
 import fs from "node:fs";
 
-export const getStaticData = () => {
+export const getStaticData = (): App.StaticData => {
   const stats = fs.statfsSync(process.platform === "win32" ? "C://" : "/");
   const total = stats.bsize * stats.blocks;
   const free = stats.bsize * stats.bfree;

@@ -5,14 +5,14 @@
   "tsx": true,
   "tailwind": {
     "config": "",
-    "css": "src/app/main.css",
+    "css": "src/app/styles/main.css",
     "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
   },
   "aliases": {
-    "components": "src/shared",
-    "utils": "src/shared/lib/shadcn"
+    "components": "@/shared",
+    "utils": "@/shared/lib/shadcn"
   },
   "iconLibrary": "lucide"
 }

@@ -2,7 +2,7 @@ import { RendererToMainEvent } from "@/shared/config/events";
 import { useEffect, useState } from "react";
 
 export const useStaticData = () => {
-  const [data, setData] = useState<Record<string, number> | null>(null);
+  const [data, setData] = useState<App.StaticData | null>(null);
 
   useEffect(() => {
     window.ipcRenderer
