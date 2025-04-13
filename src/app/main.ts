@@ -5,45 +5,73 @@ import {
   ipcMain,
 } from "electron";
 import path from "node:path";
-import { FrameStatus, RendererToMainEvent } from "../shared/config/events";
-import { getStaticData } from "../shared/lib/os-utils";
+import {
+  FrameStatus,
+  MainToRendererEvent,
+  RendererToMainEvent,
+} from "../shared/config/events";
+import { getResourcesLimits, getResourcesUsage } from "../shared/lib/os-utils";
 
 class Main {
-  private mainWindow: BrowserWindow | undefined;
+  private intervalIds!: Set<NodeJS.Timeout>;
+  private mainWindow!: BrowserWindow;
 
-  constructor(private windowConfig: BrowserWindowConstructorOptions) {
-    app.whenReady().then(() => {
-      this.createMainWindow();
-    });
+  constructor(private readonly windowConfig: BrowserWindowConstructorOptions) {
+    app.on("ready", this.createMainWindow);
+    app.on("before-quit", this.destroyMainWindow);
 
-    ipcMain.on(RendererToMainEvent.SEND_FRAME_STATUS, (_, status) =>
-      this.manageMainWindow(status),
+    ipcMain.on(RendererToMainEvent.SEND_FRAME_STATUS, this.manageMainWindow);
+
+    ipcMain.handle(
+      RendererToMainEvent.GET_RESOURCES_LIMITS,
+      getResourcesLimits,
     );
 
-    ipcMain.handle(RendererToMainEvent.GET_STATIC_DATA, getStaticData);
+    ipcMain.handle(
+      RendererToMainEvent.GET_RESOURCES_USAGE,
+      this.pollResourcesUsage,
+    );
   }
 
-  createMainWindow = async () => {
+  private createMainWindow = async () => {
     this.mainWindow = new BrowserWindow(this.windowConfig);
+    this.intervalIds = new Set();
 
-    if (process.env.VITE_DEV_SERVER_URL) {
-      await this.mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
-    } else {
-      await this.mainWindow.loadFile("dist/index.html");
+    await (process.env.VITE_DEV_SERVER_URL
+      ? this.mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL)
+      : this.mainWindow.loadFile("dist/index.html"));
+  };
+
+  private destroyMainWindow = () => {
+    this.intervalIds.forEach(clearInterval);
+    this.intervalIds.clear();
+  };
+
+  private manageMainWindow = (_: unknown, status: FrameStatus) => {
+    switch (status) {
+      case FrameStatus.CLOSE:
+        return this.mainWindow.close();
+
+      case FrameStatus.MAXIMIZE:
+        return this.mainWindow.maximize();
+
+      case FrameStatus.MINIMIZE: {
+        return this.mainWindow.minimize();
+      }
     }
   };
 
-  manageMainWindow = (status: `${FrameStatus}`) => {
-    switch (status) {
-      case FrameStatus.CLOSE:
-        return this.mainWindow!.close();
+  private pollResourcesUsage = (_: unknown, interval: number) => {
+    const intervalId = setInterval(async () => {
+      const usage = await getResourcesUsage();
 
-      case FrameStatus.MAXIMIZE:
-        return this.mainWindow!.maximize();
+      this.mainWindow.webContents.send(
+        MainToRendererEvent.SEND_RESOURCES_USAGE,
+        usage,
+      );
+    }, interval);
 
-      case FrameStatus.MINIMIZE:
-        return this.mainWindow!.minimize();
-    }
+    this.intervalIds.add(intervalId);
   };
 }
 

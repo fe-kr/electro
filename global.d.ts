@@ -5,15 +5,17 @@ declare global {
     ipcRenderer: IpcRenderer;
   }
 
-  namespace App {
-    interface StaticData {
-      total: number;
-      usage: number;
+  namespace Resources {
+    interface Limits {
+      storage: number;
+      cpu: string;
+      ram: number;
     }
 
-    interface DynamicData {
-      total: number;
-      usage: number;
+    interface Usage {
+      storage: number;
+      cpu: number;
+      ram: number;
     }
   }
 }

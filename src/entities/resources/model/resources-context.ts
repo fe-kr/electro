@@ -1,10 +1,8 @@
 import { createContext } from "react";
 
 interface IResourcesContext {
-  data: {
-    static: "";
-    dynamic: "";
-  };
+  limits: Resources.Limits | null;
+  usage: Resources.Usage[];
 }
 
 export const ResourcesContext = createContext<IResourcesContext>(null!);

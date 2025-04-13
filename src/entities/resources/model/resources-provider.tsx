@@ -1,21 +1,12 @@
 import { ResourcesContext } from "./resources-context";
-import { useStaticData } from "../lib/use-static-data";
-import { useDynamicData } from "../lib/use-dynamic-data";
+import { useResourcesLimitsData } from "../lib/use-resources-limits-data";
+import { useResourcesUsageData } from "../lib/use-resources-usage-data";
 
 export const ResourcesProvider = ({ children }: React.PropsWithChildren) => {
-  const staticData = useStaticData();
-  const dynamicData = useDynamicData(10);
+  const limits = useResourcesLimitsData();
+  const usage = useResourcesUsageData(10);
 
   return (
-    <ResourcesContext
-      value={{
-        data: {
-          static: staticData,
-          dynamic: dynamicData,
-        },
-      }}
-    >
-      {children}
-    </ResourcesContext>
+    <ResourcesContext value={{ limits, usage }}>{children}</ResourcesContext>
   );
 };

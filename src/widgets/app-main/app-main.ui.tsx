@@ -1,5 +1,8 @@
-import { ResourcesProvider } from "@/entities/resources/model/resources-provider";
+import { ResourcesContext } from "@/entities/resources/model/resources-context";
+import { use } from "react";
 
 export const AppMain = () => {
-  return <ResourcesProvider>Hello World</ResourcesProvider>;
+  use(ResourcesContext);
+
+  return <>Hello World</>;
 };
