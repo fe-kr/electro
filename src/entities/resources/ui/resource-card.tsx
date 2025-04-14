@@ -23,7 +23,7 @@ export const ResourceCard = ({
         <CardDescription className="truncate">{description}</CardDescription>
       </CardHeader>
 
-      <CardContent>{children}</CardContent>
+      <CardContent className="flex-auto">{children}</CardContent>
     </Card>
   );
 };

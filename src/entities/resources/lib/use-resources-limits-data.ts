@@ -6,7 +6,7 @@ export const useResourcesLimitsData = () => {
 
   useEffect(() => {
     window.ipcRenderer
-      .invoke(RendererToMainEvent.GET_RESOURCES_LIMITS)
+      ?.invoke(RendererToMainEvent.GET_RESOURCES_LIMITS)
       .then(setData)
       .catch(Error);
   }, []);

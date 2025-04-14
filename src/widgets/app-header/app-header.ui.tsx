@@ -1,6 +1,7 @@
+import { SettingsDialog } from "@/features/settings";
 import { FrameStatus, RendererToMainEvent } from "@/shared/config/events";
 import { Button } from "@/shared/ui/button";
-import { X, Minus } from "lucide-react";
+import { X, Minus, GripHorizontal } from "lucide-react";
 
 export const AppHeader = () => {
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -10,10 +11,12 @@ export const AppHeader = () => {
   };
 
   return (
-    <header className="flex items-center gap-2 [-webkit-app-region:drag]">
-      <h1 className="flex-grow" />
+    <header className="grid grid-cols-3 gap-2">
+      <SettingsDialog />
 
-      <div className="[-webkit-app-region:no-drag]">
+      <GripHorizontal className="cursor-grab place-self-center [-webkit-app-region:drag]" />
+
+      <div className="place-self-end">
         <Button
           variant="ghost"
           size="icon"

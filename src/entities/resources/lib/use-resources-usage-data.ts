@@ -17,15 +17,15 @@ export function useResourcesUsageData(limit: number) {
   );
 
   useEffect(() => {
-    window.ipcRenderer.invoke(RendererToMainEvent.GET_RESOURCES_USAGE, 500);
+    window.ipcRenderer?.invoke(RendererToMainEvent.GET_RESOURCES_USAGE, 500);
 
-    window.ipcRenderer.on(
+    window.ipcRenderer?.on(
       MainToRendererEvent.SEND_RESOURCES_USAGE,
       onReceiveData,
     );
 
     return () => {
-      window.ipcRenderer.off(
+      window.ipcRenderer?.off(
         MainToRendererEvent.SEND_RESOURCES_USAGE,
         onReceiveData,
       );
