@@ -13,7 +13,7 @@ import {
 import { getResourcesLimits, getResourcesUsage } from "../shared/lib/os-utils";
 
 class Main {
-  private intervalIds!: Set<NodeJS.Timeout>;
+  private pollIntervalId?: NodeJS.Timeout;
   private mainWindow!: BrowserWindow;
 
   constructor(private readonly windowConfig: BrowserWindowConstructorOptions) {
@@ -35,7 +35,6 @@ class Main {
 
   private createMainWindow = async () => {
     this.mainWindow = new BrowserWindow(this.windowConfig);
-    this.intervalIds = new Set();
 
     await (process.env.VITE_DEV_SERVER_URL
       ? this.mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL)
@@ -43,17 +42,13 @@ class Main {
   };
 
   private destroyMainWindow = () => {
-    this.intervalIds.forEach(clearInterval);
-    this.intervalIds.clear();
+    clearInterval(this.pollIntervalId);
   };
 
   private manageMainWindow = (_: unknown, status: FrameStatus) => {
     switch (status) {
       case FrameStatus.CLOSE:
         return this.mainWindow.close();
-
-      case FrameStatus.MAXIMIZE:
-        return this.mainWindow.maximize();
 
       case FrameStatus.MINIMIZE: {
         return this.mainWindow.minimize();
@@ -62,7 +57,9 @@ class Main {
   };
 
   private pollResourcesUsage = (_: unknown, interval: number) => {
-    const intervalId = setInterval(async () => {
+    clearInterval(this.pollIntervalId);
+
+    this.pollIntervalId = setInterval(async () => {
       const usage = await getResourcesUsage();
 
       this.mainWindow.webContents.send(
@@ -70,12 +67,15 @@ class Main {
         usage,
       );
     }, interval);
-
-    this.intervalIds.add(intervalId);
   };
 }
 
 new Main({
+  skipTaskbar: true,
+  alwaysOnTop: true,
+  hasShadow: true,
+  width: 320,
+  useContentSize: true,
   webPreferences: {
     preload: path.join(app.getAppPath(), "dist-electron", "preload.mjs"),
   },

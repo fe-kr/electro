@@ -1,6 +1,6 @@
 import { FrameStatus, RendererToMainEvent } from "@/shared/config/events";
 import { Button } from "@/shared/ui/button";
-import { X, Minimize, Maximize } from "lucide-react";
+import { X, Minus } from "lucide-react";
 
 export const AppHeader = () => {
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -10,20 +10,10 @@ export const AppHeader = () => {
   };
 
   return (
-    <header className="flex items-center gap-2 p-2 [-webkit-app-region:drag]">
+    <header className="flex items-center gap-2 [-webkit-app-region:drag]">
       <h1 className="flex-grow" />
 
       <div className="[-webkit-app-region:no-drag]">
-        <Button
-          variant="ghost"
-          size="icon"
-          title="Maximize"
-          data-status={FrameStatus.MAXIMIZE}
-          onClick={onClick}
-        >
-          <Maximize />
-        </Button>
-
         <Button
           variant="ghost"
           size="icon"
@@ -31,7 +21,7 @@ export const AppHeader = () => {
           data-status={FrameStatus.MINIMIZE}
           onClick={onClick}
         >
-          <Minimize />
+          <Minus />
         </Button>
 
         <Button

@@ -6,17 +6,11 @@ declare global {
   }
 
   namespace Resources {
-    interface Limits {
-      storage: number;
-      cpu: string;
-      ram: number;
-    }
+    type Variant = "cpu" | "ram" | "storage";
 
-    interface Usage {
-      storage: number;
-      cpu: number;
-      ram: number;
-    }
+    type Limits = Record<Variant, string>;
+
+    type Usage = Record<Variant, number>;
   }
 }
 

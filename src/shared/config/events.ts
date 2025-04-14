@@ -11,5 +11,4 @@ export const enum MainToRendererEvent {
 export const enum FrameStatus {
   CLOSE = "CLOSE",
   MINIMIZE = "MINIMIZE",
-  MAXIMIZE = "MAXIMIZE",
 }

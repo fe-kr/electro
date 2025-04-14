@@ -5,19 +5,15 @@ import {
 import { useCallback, useEffect, useState } from "react";
 
 export function useResourcesUsageData(limit: number) {
-  const [data, setData] = useState<Array<Resources.Usage>>([]);
+  const [data, setData] = useState<(Resources.Usage | null)[]>(() =>
+    Array.from({ length: limit }).map(() => null),
+  );
 
   const onReceiveData = useCallback(
     (_: unknown, data: Array<Resources.Usage>) => {
-      const isQueueOverflow = data.length === limit;
-
-      setData((prevState) =>
-        isQueueOverflow
-          ? prevState.slice(1).concat(data)
-          : prevState.concat(data),
-      );
+      setData((prevState) => prevState.slice(1).concat(data));
     },
-    [limit],
+    [],
   );
 
   useEffect(() => {

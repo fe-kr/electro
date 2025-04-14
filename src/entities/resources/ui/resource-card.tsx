@@ -20,7 +20,7 @@ export const ResourceCard = ({
     <Card>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription className="truncate">{description}</CardDescription>
       </CardHeader>
 
       <CardContent>{children}</CardContent>
