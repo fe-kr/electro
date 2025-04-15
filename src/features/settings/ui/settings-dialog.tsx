@@ -7,24 +7,12 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/shared/ui/dialog";
-import { Label } from "@/shared/ui/label";
-import { Switch } from "@/shared/ui/switch";
 import { Settings } from "lucide-react";
-import { useSettingsContext } from "../model/settings-context";
+import { Separator } from "@/shared/ui/separator";
+import { ResourceToggler } from "@/features/resources/@x/settings";
+import { ThemeToggler } from "@/features/theme/@x/settings";
 
 export const SettingsDialog = () => {
-  const { settings, setSettings } = useSettingsContext();
-
-  const onSwitchChange = ({
-    name,
-    checked,
-  }: {
-    name: string;
-    checked: boolean;
-  }) => {
-    setSettings({ [name]: checked });
-  };
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -40,32 +28,27 @@ export const SettingsDialog = () => {
         </DialogHeader>
 
         <div className="flex flex-col gap-4 py-4">
-          <div className="flex justify-between gap-4">
-            <Label>CPU</Label>
-            <Switch
-              name="isCpuShown"
-              checked={settings.isCpuShown}
-              onChange={onSwitchChange}
-            />
-          </div>
+          <ResourceToggler
+            name="cpu"
+            label="CPU"
+            className="flex justify-between gap-4"
+          />
 
-          <div className="flex justify-between gap-4">
-            <Label>RAM</Label>
-            <Switch
-              name="isRamShown"
-              checked={settings.isRamShown}
-              onChange={onSwitchChange}
-            />
-          </div>
+          <ResourceToggler
+            name="ram"
+            label="RAM"
+            className="flex justify-between gap-4"
+          />
 
-          <div className="flex justify-between gap-4">
-            <Label>Storage</Label>
-            <Switch
-              name="isStorageShown"
-              checked={settings.isStorageShown}
-              onChange={onSwitchChange}
-            />
-          </div>
+          <ResourceToggler
+            name="storage"
+            label="Storage"
+            className="flex justify-between gap-4"
+          />
+
+          <Separator />
+
+          <ThemeToggler label="Theme" className="flex justify-between gap-4" />
         </div>
       </DialogContent>
     </Dialog>

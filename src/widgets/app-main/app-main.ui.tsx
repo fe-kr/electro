@@ -1,25 +1,23 @@
 import {
   ResourceCard,
-  ResourcesContext,
   ResourceChart,
+  useResourcesContext,
+  useResourcesVisibilityContext,
 } from "@/features/resources";
-import { useSettingsContext } from "@/features/settings";
-import { use } from "react";
 
 export const AppMain = () => {
-  const { limits, usage } = use(ResourcesContext);
-  const { isCpuShown, isRamShown, isStorageShown } =
-    useSettingsContext().settings;
+  const { limits, usage } = useResourcesContext();
+  const visibility = useResourcesVisibilityContext()[0];
 
   return (
-    <main className="grid flex-grow gap-2 p-2">
-      {isCpuShown && (
+    <main className={`grid flex-grow grid-rows-3 gap-2 overflow-hidden p-2`}>
+      {visibility.cpu && (
         <ResourceCard title="CPU" description={limits?.cpu ?? "-"}>
           <ResourceChart data={usage} dataKey="cpu" />
         </ResourceCard>
       )}
 
-      {isRamShown && (
+      {visibility.ram && (
         <ResourceCard
           title="RAM"
           description={`Total capacity: ${limits?.ram ?? "-"} GB`}
@@ -28,7 +26,7 @@ export const AppMain = () => {
         </ResourceCard>
       )}
 
-      {isStorageShown && (
+      {visibility.storage && (
         <ResourceCard
           title="STORAGE"
           description={`Total capacity: ${limits?.storage ?? "-"} GB`}

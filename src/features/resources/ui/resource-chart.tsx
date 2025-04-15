@@ -3,27 +3,23 @@ import {
   AreaChart,
   CartesianGrid,
   ResponsiveContainer,
-  ResponsiveContainerProps,
   XAxis,
   YAxis,
 } from "recharts";
 
-interface ResourceChartProps extends Partial<ResponsiveContainerProps> {
+interface ResourceChartProps {
   data: (Partial<Resources.Usage> | null)[];
   dataKey: Resources.Variant;
 }
 
-export const ResourceChart = ({
-  data,
-  dataKey,
-  ...props
-}: ResourceChartProps) => {
+export const ResourceChart = ({ data, dataKey }: ResourceChartProps) => {
   const { fill, stroke } = colors[dataKey];
 
   return (
-    <ResponsiveContainer {...props} height="100%">
+    <ResponsiveContainer height="100%">
       <AreaChart data={data}>
-        <CartesianGrid stroke="#333" strokeDasharray="5 5" fill="#1C1C1C" />
+        <CartesianGrid />
+
         <Area
           fillOpacity={0.3}
           fill={fill}
