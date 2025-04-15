@@ -1,3 +1,3 @@
 export { SettingsDialog } from "./ui/settings-dialog";
 export { SettingsProvider } from "./model/settings-provider";
-export { SettingsContext } from "./model/settings-context";
+export { useSettingsContext } from "./model/settings-context";

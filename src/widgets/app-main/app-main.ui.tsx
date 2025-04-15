@@ -2,23 +2,24 @@ import {
   ResourceCard,
   ResourcesContext,
   ResourceChart,
-} from "@/entities/resources";
-import { SettingsContext } from "@/features/settings";
+} from "@/features/resources";
+import { useSettingsContext } from "@/features/settings";
 import { use } from "react";
 
 export const AppMain = () => {
   const { limits, usage } = use(ResourcesContext);
-  const { settings } = use(SettingsContext);
+  const { isCpuShown, isRamShown, isStorageShown } =
+    useSettingsContext().settings;
 
   return (
     <main className="grid flex-grow gap-2 p-2">
-      {settings.cpu && (
+      {isCpuShown && (
         <ResourceCard title="CPU" description={limits?.cpu ?? "-"}>
           <ResourceChart data={usage} dataKey="cpu" />
         </ResourceCard>
       )}
 
-      {settings.ram && (
+      {isRamShown && (
         <ResourceCard
           title="RAM"
           description={`Total capacity: ${limits?.ram ?? "-"} GB`}
@@ -27,7 +28,7 @@ export const AppMain = () => {
         </ResourceCard>
       )}
 
-      {settings.storage && (
+      {isStorageShown && (
         <ResourceCard
           title="STORAGE"
           description={`Total capacity: ${limits?.storage ?? "-"} GB`}

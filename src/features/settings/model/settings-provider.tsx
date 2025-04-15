@@ -2,10 +2,10 @@ import { SettingsContext } from "./settings-context";
 import { useReducedState } from "@/shared/lib/react";
 
 const initialState = {
-  ram: true,
-  cpu: true,
-  storage: true,
-  theme: "dark",
+  isRamShown: true,
+  isCpuShown: true,
+  isStorageShown: true,
+  isDarkThemeEnabled: true,
 };
 
 export const SettingsProvider = ({ children }: React.PropsWithChildren) => {

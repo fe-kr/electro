@@ -10,11 +10,20 @@ import {
 import { Label } from "@/shared/ui/label";
 import { Switch } from "@/shared/ui/switch";
 import { Settings } from "lucide-react";
-import { SettingsContext } from "../model/settings-context";
-import { use } from "react";
+import { useSettingsContext } from "../model/settings-context";
 
 export const SettingsDialog = () => {
-  const { settings, setSettings } = use(SettingsContext);
+  const { settings, setSettings } = useSettingsContext();
+
+  const onSwitchChange = ({
+    name,
+    checked,
+  }: {
+    name: string;
+    checked: boolean;
+  }) => {
+    setSettings({ [name]: checked });
+  };
 
   return (
     <Dialog>
@@ -23,32 +32,38 @@ export const SettingsDialog = () => {
           <Settings />
         </Button>
       </DialogTrigger>
+
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
-          <DialogDescription>Make changes to your settings.</DialogDescription>
+          <DialogDescription>Update your interface settings</DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col gap-4 py-4">
           <div className="flex justify-between gap-4">
             <Label>CPU</Label>
             <Switch
-              checked={settings.cpu}
-              onCheckedChange={(checked) => setSettings({ cpu: checked })}
+              name="isCpuShown"
+              checked={settings.isCpuShown}
+              onChange={onSwitchChange}
             />
           </div>
+
           <div className="flex justify-between gap-4">
             <Label>RAM</Label>
             <Switch
-              checked={settings.ram}
-              onCheckedChange={(checked) => setSettings({ ram: checked })}
+              name="isRamShown"
+              checked={settings.isRamShown}
+              onChange={onSwitchChange}
             />
           </div>
+
           <div className="flex justify-between gap-4">
             <Label>Storage</Label>
             <Switch
-              checked={settings.storage}
-              onCheckedChange={(checked) => setSettings({ storage: checked })}
+              name="isStorageShown"
+              checked={settings.isStorageShown}
+              onChange={onSwitchChange}
             />
           </div>
         </div>

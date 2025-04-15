@@ -1,10 +1,17 @@
-import { createContext } from "react";
+import { createStrictContext, useStrictContext } from "@/shared/lib/react";
 
-type Settings = Record<Resources.Variant, boolean>;
+type Settings = {
+  isRamShown: boolean;
+  isCpuShown: boolean;
+  isStorageShown: boolean;
+  isDarkThemeEnabled: boolean;
+};
 
 interface SettingsContext {
   settings: Settings;
   setSettings: React.ActionDispatch<[Partial<Settings>]>;
 }
 
-export const SettingsContext = createContext<SettingsContext>(null!);
+export const SettingsContext = createStrictContext<SettingsContext>();
+
+export const useSettingsContext = () => useStrictContext(SettingsContext);
