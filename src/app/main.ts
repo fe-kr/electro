@@ -3,18 +3,24 @@ import {
   BrowserWindow,
   BrowserWindowConstructorOptions,
   ipcMain,
+  Menu,
+  Tray,
 } from "electron";
-import path from "node:path";
 import {
   FrameStatus,
   MainToRendererEvent,
   RendererToMainEvent,
 } from "../shared/config/events";
 import { getResourcesLimits, getResourcesUsage } from "../shared/lib/os-utils";
+import { AppPath } from "../shared/config/path";
 
 class Main {
   private pollIntervalId?: NodeJS.Timeout;
   private mainWindow!: BrowserWindow;
+
+  static init(windowConfig: BrowserWindowConstructorOptions) {
+    new Main(windowConfig);
+  }
 
   constructor(private readonly windowConfig: BrowserWindowConstructorOptions) {
     app.on("ready", this.createMainWindow);
@@ -39,6 +45,8 @@ class Main {
     await (process.env.VITE_DEV_SERVER_URL
       ? this.mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL)
       : this.mainWindow.loadFile("dist/index.html"));
+
+    this.createTray();
   };
 
   private destroyMainWindow = () => {
@@ -68,16 +76,34 @@ class Main {
       );
     }, interval);
   };
+
+  private createTray = () => {
+    const tray = new Tray(AppPath.trayIcon);
+    const trayMenu = Menu.buildFromTemplate([
+      {
+        label: "Show",
+        click: () => this.mainWindow.show(),
+      },
+      {
+        label: "Quit",
+        click: () => app.quit(),
+      },
+    ]);
+
+    tray.setToolTip("Electro");
+
+    tray.setContextMenu(trayMenu);
+  };
 }
 
-new Main({
+Main.init({
   skipTaskbar: true,
   alwaysOnTop: true,
   hasShadow: true,
   width: 320,
   useContentSize: true,
-  webPreferences: {
-    preload: path.join(app.getAppPath(), "dist-electron", "preload.mjs"),
-  },
   frame: false,
+  webPreferences: {
+    preload: AppPath.preloadFile,
+  },
 });

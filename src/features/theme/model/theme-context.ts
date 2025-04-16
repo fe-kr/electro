@@ -1,11 +1,7 @@
-import {
-  createStrictContext,
-  ReturnUseState,
-  useStrictContext,
-} from "@/shared/lib/react";
+import { createStrictContext, useStrictContext } from "@/shared/lib/react";
 import { Theme } from "../config/theme";
 
-type ThemeContext = ReturnUseState<Theme>;
+type ThemeContext = [Theme, (theme: Theme) => void];
 
 export const ThemeContext = createStrictContext<ThemeContext>();
 

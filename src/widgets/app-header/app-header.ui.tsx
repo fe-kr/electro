@@ -11,10 +11,12 @@ export const AppHeader = () => {
   };
 
   return (
-    <header className="grid grid-cols-3 gap-2">
+    <header className="grid grid-cols-3 gap-2 p-2 shadow-sm">
       <SettingsDialog />
 
-      <GripHorizontal className="cursor-grab place-self-center [-webkit-app-region:drag]" />
+      <div className="cursor-grab place-self-center px-4 [-webkit-app-region:drag]">
+        <GripHorizontal />
+      </div>
 
       <div className="place-self-end">
         <Button

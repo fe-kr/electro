@@ -1,15 +1,17 @@
 import fs from "node:fs";
 import os from "node:os";
 import osUtils from "os-utils";
+import { AppPath } from "../config/path";
 
-const getStatsPath = () => (process.platform === "win32" ? "C://" : "/");
+const ONE_GB = 1024 * 1024 * 1024;
+const ONE_KB = 1024;
 
 export const getResourcesLimits = (): Resources.Limits => {
-  const { bsize, blocks } = fs.statfsSync(getStatsPath());
+  const { bsize, blocks } = fs.statfsSync(AppPath.statsPath);
 
-  const totalStorage = Math.floor((bsize * blocks) / 1_000_000_000).toString();
+  const totalStorage = Math.floor((bsize * blocks) / ONE_GB).toString();
   const cpuModel = os.cpus()[0].model;
-  const totalRam = Math.floor(osUtils.totalmem() / 1024).toString();
+  const totalRam = Math.floor(osUtils.totalmem() / ONE_KB).toString();
 
   return {
     storage: totalStorage,
@@ -19,15 +21,15 @@ export const getResourcesLimits = (): Resources.Limits => {
 };
 
 export const getResourcesUsage = async (): Promise<Resources.Usage> => {
-  const { bfree, blocks } = fs.statfsSync(getStatsPath());
+  const { bfree, blocks } = fs.statfsSync(AppPath.statsPath);
 
   const storageUsage = 1 - bfree / blocks;
   const cpuUsage = await new Promise(osUtils.cpuUsage).catch(() => 0);
   const ramUsage = 1 - osUtils.freememPercentage();
 
   return {
-    storage: storageUsage * 100,
-    cpu: cpuUsage * 100,
-    ram: ramUsage * 100,
+    storage: storageUsage,
+    cpu: cpuUsage,
+    ram: ramUsage,
   };
 };

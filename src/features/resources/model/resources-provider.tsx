@@ -17,10 +17,10 @@ export const ResourcesProvider = ({ children }: React.PropsWithChildren) => {
 export const ResourcesVisibilityProvider = ({
   children,
 }: React.PropsWithChildren) => {
-  const value = useResourcesVisibility();
+  const [data, setData] = useResourcesVisibility();
 
   return (
-    <ResourcesVisibilityContext value={value}>
+    <ResourcesVisibilityContext value={[data, setData]}>
       {children}
     </ResourcesVisibilityContext>
   );

@@ -18,7 +18,10 @@ export const ResourceChart = ({ data, dataKey }: ResourceChartProps) => {
   return (
     <ResponsiveContainer height="100%">
       <AreaChart data={data}>
-        <CartesianGrid />
+        <CartesianGrid
+          className="fill-none stroke-gray-300 dark:stroke-gray-600"
+          strokeDasharray="3 3"
+        />
 
         <Area
           fillOpacity={0.3}
@@ -30,7 +33,7 @@ export const ResourceChart = ({ data, dataKey }: ResourceChartProps) => {
           isAnimationActive={false}
         />
         <XAxis stroke="transparent" height={0} />
-        <YAxis domain={[0, 100]} stroke="transparent" width={0} />
+        <YAxis domain={[0, 1]} stroke="transparent" width={0} />
       </AreaChart>
     </ResponsiveContainer>
   );
