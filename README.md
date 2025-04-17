@@ -1,54 +1,29 @@
-# React + TypeScript + Vite
+# Electro - Resource Monitor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An ElectronJS desktop application built with Vite, React, ShadcnUI, and Tailwind CSS. This app displays your system's resource usage (RAM, CPU, Storage) much like a Task Manager, with a settings panel.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Resource Monitor is designed to give you real-time insights into your system’s performance. With an intuitive UI and customizable settings, you can:
 
-## Expanding the ESLint configuration
+- **Monitor in Real-Time:** View current usage of RAM, CPU, and storage.
+- **Customize Display:** Toggle between themes (light/dark) and choose how many charts to show.
+- **Enjoy a Modern UI:** Leverage ShadcnUI and Tailwind CSS for a sleek, responsive design.
+- **Robust Testing:** Benefit from E2E tests that ensure reliability and smooth performance.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Built With
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **[ElectronJS](https://www.electronjs.org/):** Delivering a native desktop app experience.
+- **[Vite](https://vitejs.dev/):** A modern build tool that offers fast performance.
+- **[React](https://reactjs.org/):** For a component-driven UI.
+- **[ShadcnUI](https://ui.shadcn.com/):** Helping create cohesive and modern components.
+- **[Tailwind CSS](https://tailwindcss.com/):** Utility-first CSS framework for styling.
+- **[Playwright](https://playwright.dev/):**  to ensure a flawless user experience.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- **Real-Time Resource Usage:** Visualize current use of RAM, CPU, and storage.
+- **Customizable Theme:** Switch between light and dark themes.
+- **Dynamic Chart Count:** Control how many resource charts are displayed.
+- **Desktop-Grade Performance:** Powered by Electron for a native feel.
+- **End-to-End (E2E) Testing:** Automated tests that validate the UI and functionality.
