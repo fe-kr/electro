@@ -24,7 +24,7 @@ class Main {
 
   constructor(private readonly windowConfig: BrowserWindowConstructorOptions) {
     app.on("ready", this.createMainWindow);
-    app.on("before-quit", this.destroyMainWindow);
+    app.on("before-quit", this.onDestroyMainWindow);
 
     ipcMain.on(RendererToMainEvent.SEND_FRAME_STATUS, this.manageMainWindow);
 
@@ -42,14 +42,14 @@ class Main {
   private createMainWindow = async () => {
     this.mainWindow = new BrowserWindow(this.windowConfig);
 
-    await (process.env.VITE_DEV_SERVER_URL
-      ? this.mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL)
-      : this.mainWindow.loadFile("dist/index.html"));
+    await (import.meta.env.VITE_DEV_SERVER_URL
+      ? this.mainWindow.loadURL(import.meta.env.VITE_DEV_SERVER_URL)
+      : this.mainWindow.loadFile(AppPath.rendererFileRel));
 
     this.createTray();
   };
 
-  private destroyMainWindow = () => {
+  private onDestroyMainWindow = () => {
     clearInterval(this.pollIntervalId);
   };
 

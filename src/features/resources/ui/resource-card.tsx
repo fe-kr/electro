@@ -17,7 +17,7 @@ export const ResourceCard = ({
   children,
 }: ResourceCardProps) => {
   return (
-    <Card data-testid="resource-card">
+    <Card data-testid="resource-card" className="gap-2">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription className="truncate">{description}</CardDescription>
