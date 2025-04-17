@@ -16,7 +16,7 @@ export const ResourceChart = ({ data, dataKey }: ResourceChartProps) => {
   const { fill, stroke } = colors[dataKey];
 
   return (
-    <ResponsiveContainer height="100%">
+    <ResponsiveContainer height="99%">
       <AreaChart data={data}>
         <CartesianGrid
           className="fill-none stroke-gray-300 dark:stroke-gray-600"

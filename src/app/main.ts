@@ -3,8 +3,10 @@ import {
   BrowserWindow,
   BrowserWindowConstructorOptions,
   ipcMain,
+  IpcMain,
   Menu,
   Tray,
+  WebFrameMain,
 } from "electron";
 import {
   FrameStatus,
@@ -13,28 +15,33 @@ import {
 } from "../shared/config/events";
 import { getResourcesLimits, getResourcesUsage } from "../shared/lib/os-utils";
 import { AppPath } from "../shared/config/path";
+import { pathToFileURL } from "url";
 
 class Main {
+  static instance: Main;
   private pollIntervalId?: NodeJS.Timeout;
   private mainWindow!: BrowserWindow;
 
   static init(windowConfig: BrowserWindowConstructorOptions) {
-    new Main(windowConfig);
+    this.instance ??= new Main(windowConfig);
   }
 
   constructor(private readonly windowConfig: BrowserWindowConstructorOptions) {
     app.on("ready", this.createMainWindow);
     app.on("before-quit", this.onDestroyMainWindow);
 
-    ipcMain.on(RendererToMainEvent.SEND_FRAME_STATUS, this.manageMainWindow);
+    this.ipcMainHandle(
+      RendererToMainEvent.INVOKE_CHANGE_FRAME_STATUS,
+      this.manageMainWindow,
+    );
 
-    ipcMain.handle(
-      RendererToMainEvent.GET_RESOURCES_LIMITS,
+    this.ipcMainHandle(
+      RendererToMainEvent.INVOKE_RESOURCES_LIMITS,
       getResourcesLimits,
     );
 
-    ipcMain.handle(
-      RendererToMainEvent.GET_RESOURCES_USAGE,
+    this.ipcMainHandle(
+      RendererToMainEvent.INVOKE_RESOURCES_USAGE,
       this.pollResourcesUsage,
     );
   }
@@ -75,6 +82,28 @@ class Main {
         usage,
       );
     }, interval);
+  };
+
+  private ipcMainHandle: IpcMain["handle"] = (channel, listener) => {
+    ipcMain.handle(channel, (e, ...args) => {
+      this.validateFrameSender(e.senderFrame);
+      return listener(e, ...args);
+    });
+  };
+
+  private validateFrameSender = (webFrameMain: WebFrameMain | null) => {
+    const { url } = webFrameMain ?? {};
+
+    const isDevValidUrl =
+      import.meta.env.DEV && url === import.meta.env.VITE_DEV_SERVER_URL;
+    const isProdValidUrl =
+      import.meta.env.PROD && url === `${pathToFileURL(AppPath.rendererFile)}`;
+
+    if (isDevValidUrl) return;
+
+    if (isProdValidUrl) return;
+
+    throw new Error("Invalid source");
   };
 
   private createTray = () => {

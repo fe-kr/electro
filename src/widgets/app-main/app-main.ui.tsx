@@ -17,7 +17,7 @@ export const AppMain = () => {
   );
 
   return (
-    <main className="grid flex-grow grid-rows-3 gap-2 overflow-hidden p-2">
+    <main className="grid flex-grow gap-2 overflow-y-auto p-2">
       {config.map(({ dataKey, title, description }) => {
         const limit = limits?.[dataKey] ?? "-";
 

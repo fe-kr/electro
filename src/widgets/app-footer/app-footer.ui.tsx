@@ -24,7 +24,7 @@ export const AppFooter = () => {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-2 p-2">
+    <div className="grid grid-cols-3 gap-2 px-2 pb-2">
       {config.map(({ dataKey, title, formatValue }) => (
         <Card className="gap-2 p-2 text-xs">
           <Label className="font-semibold">{title}</Label>

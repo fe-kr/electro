@@ -1,13 +1,13 @@
 import { SettingsDialog } from "@/features/settings";
-import { FrameStatus, RendererToMainEvent } from "@/shared/config/events";
+import { FrameStatus } from "@/shared/config/events";
 import { Button } from "@/shared/ui/button";
 import { X, Minus, GripHorizontal } from "lucide-react";
 
 export const AppHeader = () => {
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { status } = e.currentTarget.dataset;
+    const status = e.currentTarget.dataset.status as FrameStatus;
 
-    window.ipcRenderer.send(RendererToMainEvent.SEND_FRAME_STATUS, status);
+    window.electronAPI.invokeChangeFrameStatus(status);
   };
 
   return (
