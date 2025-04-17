@@ -14,6 +14,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   onSendResourcesUsage: (callback) => {
     const listen = (_: unknown, payload: Resources.Usage) => callback(payload);
     ipcRenderer.on(MainToRendererEvent.SEND_RESOURCES_USAGE, listen);
+
     return () => {
       ipcRenderer.off(MainToRendererEvent.SEND_RESOURCES_USAGE, listen);
     };

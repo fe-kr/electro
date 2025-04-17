@@ -7,13 +7,15 @@ import { AppMain } from "@/widgets/app-main";
 export const MainPage = () => {
   return (
     <SettingsProvider>
-      <AppHeader />
+      <div className="bg-background flex flex-grow flex-col rounded-lg">
+        <AppHeader />
 
-      <ResourcesProvider>
-        <AppMain />
+        <ResourcesProvider>
+          <AppMain />
 
-        <AppFooter />
-      </ResourcesProvider>
+          <AppFooter />
+        </ResourcesProvider>
+      </div>
     </SettingsProvider>
   );
 };

@@ -11,7 +11,7 @@ export const AppHeader = () => {
   };
 
   return (
-    <header className="grid grid-cols-3 gap-2 p-2 shadow-sm">
+    <header className="grid grid-cols-3 gap-2 p-1 shadow-sm">
       <SettingsDialog />
 
       <div className="cursor-grab place-self-center px-4 [-webkit-app-region:drag]">

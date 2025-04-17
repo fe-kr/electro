@@ -1,12 +1,5 @@
 import { percentageFormatter } from "@/shared/lib/format";
 
-interface ResourcesUsageConfigItem {
-  dataKey: Resources.Variant;
-  title: string;
-  description?: string;
-  formatValue?: (value: number) => string;
-}
-
 export const resourcesUsageConfig = [
   {
     dataKey: "cpu",
@@ -22,7 +15,7 @@ export const resourcesUsageConfig = [
     title: "Storage",
     description: "Total capacity, GB:",
   },
-] satisfies ResourcesUsageConfigItem[];
+] satisfies Resources.UsageConfigItem[];
 
 export const resourcesUsageLimitsConfig = [
   {
@@ -40,4 +33,4 @@ export const resourcesUsageLimitsConfig = [
     title: "Storage",
     formatValue: percentageFormatter.format,
   },
-] satisfies ResourcesUsageConfigItem[];
+] satisfies Resources.UsageConfigItem[];

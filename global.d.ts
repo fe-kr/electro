@@ -18,6 +18,13 @@ declare global {
     type Usage = Record<Variant, number>;
 
     type UsageCallback = (usage: Usage) => void;
+
+    interface UsageConfigItem {
+      dataKey: Resources.Variant;
+      title: string;
+      description?: string;
+      formatValue?: (value: number) => string;
+    }
   }
 }
 

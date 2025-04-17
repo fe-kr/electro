@@ -130,7 +130,8 @@ const shouldDisablePreload = process.env.PW_DISABLE_PRELOAD_SCRIPT === "true";
 Main.init({
   skipTaskbar: true,
   alwaysOnTop: true,
-  hasShadow: true,
+  hasShadow: false,
+  transparent: true,
   width: 320,
   useContentSize: true,
   frame: false,
