@@ -13,7 +13,11 @@ export const ThemeToggler = ({ label, className }: ThemeTogglerProps) => {
   const theme = useTheme();
   const setTheme = useSetTheme();
 
-  const onValueChange = (value: Theme) => setTheme(value);
+  const onValueChange = (value: Theme) => {
+    if (!value) return;
+
+    setTheme(value);
+  };
 
   return (
     <div className={className}>
@@ -25,10 +29,18 @@ export const ThemeToggler = ({ label, className }: ThemeTogglerProps) => {
         onValueChange={onValueChange}
         value={theme}
       >
-        <ToggleGroupItem value="light" title="Light">
+        <ToggleGroupItem
+          value="light"
+          data-testid="theme-toggle-light"
+          title="Light"
+        >
           <Sun />
         </ToggleGroupItem>
-        <ToggleGroupItem value="dark" title="Dark">
+        <ToggleGroupItem
+          value="dark"
+          data-testid="theme-toggle-dark"
+          title="Dark"
+        >
           <Moon />
         </ToggleGroupItem>
       </ToggleGroup>

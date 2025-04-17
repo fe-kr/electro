@@ -17,7 +17,7 @@ export const ResourceCard = ({
   children,
 }: ResourceCardProps) => {
   return (
-    <Card>
+    <Card data-testid="resource-card">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription className="truncate">{description}</CardDescription>

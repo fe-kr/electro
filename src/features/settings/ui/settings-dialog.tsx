@@ -16,7 +16,12 @@ export const SettingsDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon" title="Settings">
+        <Button
+          variant="ghost"
+          size="icon"
+          title="Settings"
+          data-testid="open-settings"
+        >
           <Settings />
         </Button>
       </DialogTrigger>

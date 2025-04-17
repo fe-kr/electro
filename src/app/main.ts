@@ -96,6 +96,8 @@ class Main {
   };
 }
 
+const shouldDisablePreload = process.env.PW_DISABLE_PRELOAD_SCRIPT === "true";
+
 Main.init({
   skipTaskbar: true,
   alwaysOnTop: true,
@@ -104,6 +106,6 @@ Main.init({
   useContentSize: true,
   frame: false,
   webPreferences: {
-    preload: AppPath.preloadFile,
+    preload: shouldDisablePreload ? undefined : AppPath.preloadFile,
   },
 });

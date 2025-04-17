@@ -13,7 +13,7 @@ import { XIcon } from "lucide-react";
 import { cn } from "@/shared/lib/shadcn";
 
 function Dialog({ ...props }: React.ComponentProps<typeof Root>) {
-  return <Root data-slot="dialog" {...props} />;
+  return <Root data-slot="dialog" data-testid="dialog" {...props} />;
 }
 
 function DialogTrigger({ ...props }: React.ComponentProps<typeof Trigger>) {

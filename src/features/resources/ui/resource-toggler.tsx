@@ -23,6 +23,7 @@ export const ResourceToggler = ({
     <div className={className}>
       <Label>{label}</Label>
       <Switch
+        data-testid="toggle-resource"
         name={name}
         checked={visibility[name]}
         onCheckedChange={onCheckedChange}

@@ -20,6 +20,7 @@ export const AppHeader = () => {
 
       <div className="place-self-end">
         <Button
+          data-testid="minimize-window"
           variant="ghost"
           size="icon"
           title="Minimize"
@@ -30,6 +31,7 @@ export const AppHeader = () => {
         </Button>
 
         <Button
+          data-testid="close-window"
           variant="ghost"
           size="icon"
           title="Close"
