@@ -1,5 +1,10 @@
 {
   "name": "electro",
+  "author": {
+    "name": "fe-kr",
+    "email": "fekr.dev@gmail.com"
+  },
+  "description": "Electron app for visualizing resources used",
   "private": true,
   "version": "0.0.0",
   "type": "module",
